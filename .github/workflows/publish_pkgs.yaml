@@ -19,6 +19,7 @@ jobs:
         with:
           registry: ${{ env.IMAGE_REGISTRY }}
           username: ${{ github.repository_owner }}
+          password: ${{ secrets.PAT }}
 
       - name: push q-sdpmon-agent tag image
         run: |
