@@ -1,0 +1,26 @@
+---
+name: image tag and upload gcr
+
+on:
+  pull_request:
+
+
+jobs:
+  dockerpush:
+    runs-on: ubuntu-22.04
+    env:
+      IMAGE_REGISTRY: ghcr.io
+      IMAGE_NAME: nyanpasu
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: docker/login-action@v2
+        with:
+          registry: ${{ env.IMAGE_REGISTRY }}
+          username: ${{ github.repository_owner }}
+
+      - name: push q-sdpmon-agent tag image
+        run: |
+          docker build -t ${{ env.IMAGE_REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:piyo .
+          docker push ${{ env.IMAGE_REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:piyo
